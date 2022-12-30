@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>Smart Note</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
@@ -15,10 +15,36 @@
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
-</body>
 
+  <nav>
+    <div class="header-left">
+      <span>My Smart To-do List</span>
+    </div>
+    <div class="header-right">
+      <button class="login" type="submit">Login</button>
+      <button class="register" type="submit">Register</button>
+    </div>
+  </nav>
+
+  <br>
+
+  <main>
+
+  <br>
+
+    <section class="new-task-form">
+      <form>
+        <input type="text" class="new-task-input" placeholder="Create a new task"></input>
+        <button class="submit-task-button" type="submit">Submit</button>
+      </form>
+    </section>
+
+    <article class="tasks-container"></article>
+
+  </main>
+</body>
 </html>
