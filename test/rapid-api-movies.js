@@ -1,23 +1,34 @@
 const axios = require("axios");
+const { movieKey } = require('../keys/movie-key')
 
-const options = {
-  method: 'GET',
-  url: 'https://online-movie-database.p.rapidapi.com/auto-complete',
-  params: {q: 'watch coraline'},
-  headers: {
-    'X-RapidAPI-Key': 'need to add a secret key',
-    'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
-  }
-};
+const getMovies = (text) => {
 
-axios.request(options)
-  .then((response) => {
+  const options = {
+    method: 'GET',
+    url: 'https://online-movie-database.p.rapidapi.com/auto-complete',
+    params: {q: text},
+    headers: {
+      'X-RapidAPI-Key': movieKey(),
+      'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+    }
+  };
 
-    if (response.data.d.length > 0) {
+  axios.request(options)
+    .then((response) => {
+
       const movieDetails = response.data.d;
       const identifier = movieDetails[0].qid;
-      return identifier;
-    }
 
-  })
-  .catch((error) => console.error(error));
+      if (identifier === 'movie') {
+        console.log(identifier);
+        return identifier;
+      } else {
+        console.log('this is not a movie');
+      }
+
+    })
+    .catch((error) => console.error(error.message));
+
+}
+
+getMovies('watch harry potter');

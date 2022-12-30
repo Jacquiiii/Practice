@@ -1,7 +1,7 @@
 // -------- Determines category based on text passed into function -------- //
 
 
-// Returns a promise
+// Returns a promise. Requires npm install --save @google-cloud/language.
 async function quickstart(text) {
 
   // Imports the Google Cloud client library
@@ -47,5 +47,7 @@ async function quickstart(text) {
   if (productWinner) return 'Products';
 
 }
+
+console.log(quickstart('Coraline'));
 
 module.exports = { quickstart };

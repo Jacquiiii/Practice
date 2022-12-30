@@ -88,5 +88,3 @@ async function quickstart(text) {
 }
 
 quickstart("Harry Potter");
-
-// quickstart("This study verified that the smoothness of reaching movements is able to quantitatively evaluate the effects of two-and three-dimensional images on movement in healthy people. In addition, clinical data of cerebrovascular accident patients were also analyzed by the same method.");

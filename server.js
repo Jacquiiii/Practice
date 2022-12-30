@@ -42,45 +42,45 @@ app.get('/', (req, res) => {
 });
 
 // works with post route on public/scripts/app.js to insert form input into database and calls quickstart function to use google cloud natural language api to categorize
-// app.post('/tasks', function(req, res) {
-
-//   quickstart(req.body.name)
-//     .then((result) => {
-
-//     const category = result;
-//     const values = [req.body.name, category];
-//     const queryString = `
-//       INSERT INTO tasks (name, category)
-//       VALUES ($1, $2)
-//       RETURNING *;
-//       `;
-
-//     db.query(queryString, values)
-//       .then(() => res.send('Success'))
-//       .catch(() => res.send(err));
-
-//     })
-
-//     .catch(() => console.log('error'));
-
-// });
-
-// works with post route on public/scripts/app.js to insert form input into database
 app.post('/tasks', function(req, res) {
 
-  const category = 'unknown';
-  const values = [req.body.name, category];
-  const queryString = `
-    INSERT INTO tasks (name, category)
-    VALUES ($1, $2)
-    RETURNING *;
-    `;
+  quickstart(req.body.name)
+    .then((result) => {
 
-  db.query(queryString, values)
-    .then(() => res.send('Success'))
-    .catch(() => res.send(err));
+    const category = result;
+    const values = [req.body.name, category];
+    const queryString = `
+      INSERT INTO tasks (name, category)
+      VALUES ($1, $2)
+      RETURNING *;
+      `;
+
+    db.query(queryString, values)
+      .then(() => res.send('Success'))
+      .catch(() => res.send(err));
+
+    })
+
+    .catch(() => console.log('error'));
 
 });
+
+// alternative to the above without google natural language
+// app.post('/tasks', function(req, res) {
+
+//   const category = 'unknown';
+//   const values = [req.body.name, category];
+//   const queryString = `
+//     INSERT INTO tasks (name, category)
+//     VALUES ($1, $2)
+//     RETURNING *;
+//     `;
+
+//   db.query(queryString, values)
+//     .then(() => res.send('Success'))
+//     .catch(() => res.send(err));
+
+// });
 
 
 // --------------- Server listen code --------------- //
