@@ -63,7 +63,7 @@ app.post('/tasks', function(req, res) {
         .then(() => res.send('Success'))
         .catch(() => res.send(err));
       })
-    .catch(() => console.log('error'));
+    .catch((err) => console.log(err));
 });
 
 // alternative to the above without google natural language

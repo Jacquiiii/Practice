@@ -1,0 +1,33 @@
+/* from https://catalin.red/simple-and-effective-dropdown-login-box/ */
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+  position: relative;
+  display: flex;
+}
+
+.login-content, .signup-content {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  padding: 1em;
+}
+
+.login-button, .signup-button {
+  margin: 0.5em;
+  background-color: transparent;
+  border: transparent;
+  font-size: 1em;
+  color: rgb(94, 26, 94);
+}
+
+.inputs, .actions {
+  background: #cdb9c9;
+  border: transparent;
+}

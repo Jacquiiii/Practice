@@ -12,11 +12,13 @@ const createTaskElement = function(task) {
   const $task = `
     <div class="task">
     <div class="task-content">
-      <input type="text" class="text" value="${escape(task.name)}" readonly />
+      <li><input type="text" class="text" value="To-do: ${escape(task.name)}" readonly /></li>
+      <li><input type="text" class="text" value="Category: ${escape(task.category)}" readonly /></li>
     </div>
-    <div>
+    <div class="task-buttons">
       <button class="edit">Edit</button>
       <button class="delete">Delete</button>
+      <button class="change-category">Change Category</button>
     </div>
     </div>
     `;
