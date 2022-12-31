@@ -1,44 +1,40 @@
-// Rapid API Movies: https://rapidapi.com/apidojo/api/online-movie-database/
+// Google Books API: https://developers.google.com/books/docs/v1/using
 
 const axios = require("axios");
-const { movieKey } = require('../keys/movie-key');
+const { bookKey } = require('../keys/book-key');
+const key = bookKey();
 
-const getMovies = (text) => {
+const getBooks = (text) => {
 
   return new Promise((resolve, reject) => {
 
     const options = {
       method: 'GET',
-      url: 'https://online-movie-database.p.rapidapi.com/auto-complete',
-      params: {q: text},
-      headers: {
-        'X-RapidAPI-Key': movieKey(),
-        'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
-      }
+      url: `https://www.googleapis.com/books/v1/volumes?q=${text}&key=${key}`,
     };
 
     axios.request(options)
       .then((response) => {
-        const movieDetails = response.data.d;
-        const identifier = movieDetails[0].qid;
-        (identifier === 'movie') ? resolve('Movies') : reject(new Error('This is not a movie'));
+        const bookDetails = response.data.items;
+        (bookDetails) ? resolve('Books') : reject(new Error('This is not a book'));
       })
       .catch((error) => reject(error));
-  })
+
+  });
 
 };
 
-module.exports = { getMovies };
+module.exports = { getBooks };
 
 
 // ----------- add the following code to server.js if required ----------- //
 
 
-// const { getMovies } = require('./test/rapid-api-movies.js');
+// const { getBooks } = require('./test/google-books.js');
 
 // app.post('/tasks', function(req, res) {
 
-//   getMovies(req.body.name)
+//   getBooks(req.body.name)
 //   .then((result) => {
 
 //   const category = result;

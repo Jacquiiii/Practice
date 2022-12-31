@@ -34,9 +34,15 @@ const { quickstart } = require('./helpers.js');
 
 // ------------------- Route code -------------------- //
 
+// displays tasks from database
 const tasksRoutes = require('./routes/tasks');
 app.use('/tasks', tasksRoutes);
 
+// displays users from database
+const userRoutes = require('./routes/users');
+app.use('/users', userRoutes);
+
+// renders home page
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -46,23 +52,18 @@ app.post('/tasks', function(req, res) {
 
   quickstart(req.body.name)
     .then((result) => {
-
-    const category = result;
-    const values = [req.body.name, category];
-    const queryString = `
-      INSERT INTO tasks (name, category)
-      VALUES ($1, $2)
-      RETURNING *;
-      `;
-
-    db.query(queryString, values)
-      .then(() => res.send('Success'))
-      .catch(() => res.send(err));
-
-    })
-
+      const category = result;
+      const values = [req.body.name, category];
+      const queryString = `
+        INSERT INTO tasks (name, category)
+        VALUES ($1, $2)
+        RETURNING *;
+        `;
+      db.query(queryString, values)
+        .then(() => res.send('Success'))
+        .catch(() => res.send(err));
+      })
     .catch(() => console.log('error'));
-
 });
 
 // alternative to the above without google natural language

@@ -6,38 +6,30 @@ async function quickstart(text) {
 
   // Imports the Google Cloud client library
   const language = require('@google-cloud/language');
-
   // Creates a client
   const client = new language.LanguageServiceClient();
-
   // Prepares a document, representing the provided text
   const document = {
     content: text,
     type: 'PLAIN_TEXT',
   };
-
-  const classificationModelOptions = {
-    v2Model: {
-      contentCategoriesVersion: 'V2',
-    },
-  };
-
+  // V2 for Google Natural Language
+  const classificationModelOptions = { v2Model: { contentCategoriesVersion: 'V2'} };
   // Classifies text in the document
   const [classification] = await client.classifyText({
     document,
-    classificationModelOptions,
+    classificationModelOptions
   });
-
   // Updated to true if the text matches a certain category
   let restaurantWinner, movieWinner, bookWinner, productWinner = false;
 
 
-  // Loops through categories and updayes variables to true if category is found
+  // Loops through categories and updates variables to true if category is found
   for (category of classification.categories) {
     if (category.name.includes('Restaurant')) restaurantWinner = true;
     if (category.name.includes('Movie')) movieWinner = true;
     if (category.name.includes('Book')) bookWinner = true;
-    if (category.name.includes('Shopping')) productWinner = true;
+    if (category.name.includes('Shopping') || category.name.includes('Games') || category.name.includes('Home & Garden') || category.name.includes('Computers & Electronics')) productWinner = true;
   }
 
   // Returns category matching the text
@@ -47,7 +39,5 @@ async function quickstart(text) {
   if (productWinner) return 'Products';
 
 }
-
-console.log(quickstart('Coraline'));
 
 module.exports = { quickstart };

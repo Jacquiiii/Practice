@@ -1,3 +1,2 @@
--- Users table seeds here (Example)
-INSERT INTO tasks (name, category) VALUES ('Buy shirt', 'Products');
-INSERT INTO tasks (name, category) VALUES ('Watch Harry Potter', 'Movies');
+INSERT INTO tasks (name, category, user_id) VALUES ('Buy shirt', 'Products', 1);
+INSERT INTO tasks (name, category, user_id) VALUES ('Watch Harry Potter', 'Movies', 2);
