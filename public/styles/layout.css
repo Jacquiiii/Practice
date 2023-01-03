@@ -1,0 +1,36 @@
+@import url(sanitize.css);
+@import '~sanitize.css/forms.css';
+
+body,
+html {
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #a3d0db;
+  background: linear-gradient(227deg, #d3a3db 0%, #a591b9 20%, #cca3db 34%, #dba3cb 59%, #d5b2d8 74%, #d19ebf 100%);
+  width: 100%;
+  color: rgb(34, 32, 34);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em;
+}
+
+.header-left {
+  font-size: 2.25em;
+  text-shadow: 3px 3px 4px rgb(54, 10, 54);
+  color: white;
+  font-family: cursive;
+}
+
+.header-right {
+  margin-top: 0.75em;
+  font-family: Geneva;
+}

@@ -1,0 +1,88 @@
+@import url(sanitize.css);
+@import '~sanitize.css/forms.css';
+
+.new-task-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.task-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-buttons {
+  align-self: center;
+}
+
+.submit-task-button {
+  align-self: flex-end;
+}
+
+.new-task-input {
+  border: transparent;
+  padding: 0.4em;
+  border-radius: 0.25em;
+  width: 30vw;
+  color: rgb(75, 9, 75);
+  background-color: white;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2em;
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 0.5em;
+  width: 80vw;
+}
+
+.task:hover {
+  box-shadow: 0.5em .5em 0.25em darkgrey;
+}
+
+.text {
+  margin-right: 0.4em;
+  border: transparent;
+  color: rgb(75, 9, 75);
+}
+
+.edit, .delete, .submit-task-button, .change-category {
+  border-radius: 0.3em;
+  background-color: rgb(120, 37, 131);
+  border: transparent;
+  padding: 0.4em;
+  cursor: pointer;
+  color: white;
+}
+
+.edit:hover, .delete:hover, .submit-task-button:hover, .change-category:hover {
+  background-color: rgb(149, 80, 158);
+}
+
+.login, .register{
+  border-radius: 0.3em;
+  background-color: transparent;
+  font-weight: bold;
+  border: transparent;
+  padding: 0.4em;
+  cursor: pointer;
+  color: rgb(75, 9, 75);
+  font-size: 1.1em;
+}
+
+.login:hover, .register:hover{
+  color: white;
+}
