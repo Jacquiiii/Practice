@@ -52,22 +52,20 @@ const getMovies = (text) => {
 
 // Yelp API client for restaurants: https://github.com/tonybadguy/yelp-fusion
 // not working
-'use strict';
-const getRestaurants = (text) => {
+// 'use strict';
+// const getRestaurants = (text) => {
 
-  client.search({
-    term: text,
-    location: 'canada',
-  }).then(response => {
-    console.log(response.jsonBody.businesses);
-    console.log(response.jsonBody.businesses[0].name);
-  }).catch(e => {
-    console.log(e);
-  });
+//   client.search({
+//     term: text,
+//     location: 'canada',
+//   }).then(response => {
+//     console.log(response.jsonBody.businesses);
+//     console.log(response.jsonBody.businesses[0].name);
+//   }).catch(e => {
+//     console.log(e);
+//   });
 
-};
-
-getRestaurants('how to lose a guy in ten days');
+// };
 
 
 // Finds category based on predefined text. If no positive result is found, getCategory can be used to call APIs.

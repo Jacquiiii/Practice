@@ -47,6 +47,48 @@ app.get('/', (req, res) => {
 });
 
 
+// app.post('/tasks', function(req, res) {
+
+//   // synchronous check without api checks if input includes certain words matching specific categories and adds to database if one matches
+//   const firstCheck = categoryCheck1(req.body.name);
+//   if (firstCheck) {
+//     const category = firstCheck;
+//     const values = [req.body.name, category];
+//     const queryString = `
+//       INSERT INTO tasks (name, category)
+//       VALUES ($1, $2)
+//       RETURNING *;
+//       `;
+
+//     db.query(queryString, values)
+//       .then(() => res.send('Success'))
+//       .catch(() => res.send(err));
+
+//   // asynch check calls category specific apis and checks input against response data to determine if it could fall into one of those categories
+//   } else {
+//     categoryCheck2(req.body.name)
+//     .then((result) => {
+
+//       const category = result;
+//       const values = [req.body.name, category];
+//       const queryString = `
+//         INSERT INTO tasks (name, category)
+//         VALUES ($1, $2)
+//         RETURNING *;
+//         `;
+
+//       db.query(queryString, values)
+//         .then(() => res.send('Success'))
+//         .catch(() => res.send(err));
+
+//     })
+//     .catch((err) => console.log(err));
+//     }
+
+// });
+
+
+// works with post route on public/scripts/app.js to insert form input into database after categorizing the data
 app.post('/tasks', function(req, res) {
 
   // synchronous check without api checks if input includes certain words matching specific categories and adds to database if one matches
@@ -64,11 +106,10 @@ app.post('/tasks', function(req, res) {
       .then(() => res.send('Success'))
       .catch(() => res.send(err));
 
-  // asynch check calls category specific apis and checks input against response data to determine if it could fall into one of those categories
+  // asynch check calls Google Natural Language API and checks input against response data to determine if it could fall into one of those categories
   } else {
-    categoryCheck2(req.body.name)
+    quickstart(req.body.name)
     .then((result) => {
-
       const category = result;
       const values = [req.body.name, category];
       const queryString = `
@@ -76,56 +117,14 @@ app.post('/tasks', function(req, res) {
         VALUES ($1, $2)
         RETURNING *;
         `;
-
       db.query(queryString, values)
         .then(() => res.send('Success'))
         .catch(() => res.send(err));
-
-    })
+      })
     .catch((err) => console.log(err));
-    }
+  }
 
 });
-
-
-// works with post route on public/scripts/app.js to insert form input into database after categorizing the data
-// app.post('/tasks', function(req, res) {
-
-    // synchronous check without api checks if input includes certain words matching specific categories and adds to database if one matches
-//   const firstCheck = categoryCheck1(req.body.name);
-//   if (firstCheck) {
-//     const category = firstCheck;
-//     const values = [req.body.name, category];
-//     const queryString = `
-//       INSERT INTO tasks (name, category)
-//       VALUES ($1, $2)
-//       RETURNING *;
-//       `;
-
-//     db.query(queryString, values)
-//       .then(() => res.send('Success'))
-//       .catch(() => res.send(err));
-
-    // asynch check calls Google Natural Language API and checks input against response data to determine if it could fall into one of those categories
-//   } else {
-//     quickstart(req.body.name)
-//     .then((result) => {
-//       const category = result;
-//       const values = [req.body.name, category];
-//       const queryString = `
-//         INSERT INTO tasks (name, category)
-//         VALUES ($1, $2)
-//         RETURNING *;
-//         `;
-//       db.query(queryString, values)
-//         .then(() => res.send('Success'))
-//         .catch(() => res.send(err));
-//       })
-//     .catch((err) => console.log(err));
-//   }
-
-// });
-
 
 // alternative to the above without api to categorize
 // app.post('/tasks', function(req, res) {
