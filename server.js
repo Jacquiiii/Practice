@@ -47,9 +47,10 @@ app.get('/', (req, res) => {
 });
 
 
+// takes in text from
 app.post('/tasks', function(req, res) {
 
-  // synchronous check without api
+  // synchronous check without api checks if input includes certain words matching specific categories and adds to database if one matches
   const firstCheck = categoryCheck1(req.body.name);
   if (firstCheck) {
     const category = firstCheck;
@@ -64,8 +65,8 @@ app.post('/tasks', function(req, res) {
       .then(() => res.send('Success'))
       .catch(() => res.send(err));
 
+  // asynch check calls category specific apis and checks input against response data to determine if it could fall into one of those categories
   } else {
-    // asynch check with api
     categoryCheck2(req.body.name)
     .then((result) => {
 
