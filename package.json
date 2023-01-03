@@ -23,7 +23,8 @@
     "morgan": "^1.9.1",
     "pg": "^8.5.0",
     "sanitize.css": "^13.0.0",
-    "sass": "^1.35.1"
+    "sass": "^1.35.1",
+    "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.10"
