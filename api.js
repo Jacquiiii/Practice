@@ -1,20 +1,10 @@
-// load .env data into process.env
-require('dotenv').config();
+require('dotenv').config(); // load .env data into process.env
+const axios = require("axios"); // install axios in project: npm i axios
+const language = require('@google-cloud/language'); // Imports the Google Cloud client library
 
-// install axios in project: npm i axios
-const axios = require("axios");
-
-// Imports the Google Cloud client library
-const language = require('@google-cloud/language');
-
-// API keys from .env files
+// API keys from .env files:
 const bookKey = process.env.BOOK_KEY;
 const movieKey = process.env.MOVIE_KEY;
-const restaurantKey = process.env.RESTAURANT_KEY;
-
-// Yelp code. Not working.
-// const yelp = require('yelp-fusion');
-// const client = yelp.client(restaurantKey);
 
 
 // Google Books API: https://developers.google.com/books/docs/v1/using
@@ -50,24 +40,6 @@ const getMovies = (text) => {
 };
 
 
-// Yelp API client for restaurants: https://github.com/tonybadguy/yelp-fusion
-// not working
-// 'use strict';
-// const getRestaurants = (text) => {
-
-//   client.search({
-//     term: text,
-//     location: 'canada',
-//   }).then(response => {
-//     console.log(response.jsonBody.businesses);
-//     console.log(response.jsonBody.businesses[0].name);
-//   }).catch(e => {
-//     console.log(e);
-//   });
-
-// };
-
-
 // Finds category based on predefined text. If no positive result is found, getCategory can be used to call APIs.
 const categoryCheck1 = (text) => {
   text = text.toLowerCase();
@@ -99,14 +71,6 @@ const categoryCheck2 = (text) => {
       })
       .catch((error) => reject(error.message));
 
-    // not working:
-    // getRestaurants(text)
-    //   .then(response => {
-    //     if (response.businesses.length > 0) resolve('Restaurants');
-    //     return;
-    //   })
-    //   .catch((error) => reject(error.message));
-
     });
 
 };
@@ -120,40 +84,32 @@ async function quickstart(text) {
 
   // Creates a client
   const client = new language.LanguageServiceClient();
-  // Prepares a document, representing the provided text
+
+  // Classifies text in the document
   const document = {
     content: text,
     type: 'PLAIN_TEXT',
   };
-  // V2 for Google Natural Language
   const classificationModelOptions = { v2Model: { contentCategoriesVersion: 'V2'} };
-  // Classifies text in the document
-  const [classification] = await client.classifyText({
-    document,
-    classificationModelOptions
-  });
+  const [classification] = await client.classifyText({ document, classificationModelOptions });
+  
   // Updated to true if the text matches a certain category
   let eat, watch, read, buy = false;
 
   // Loops through categories and updates variables to true if category is found
   for (category of classification.categories) {
-
     if (category.name.includes('Restaurants') || category.name.includes('Food Service') || category.name.includes('Cuisines')) {
       eat = true;
     }
-
     if (category.name.includes('Movie') || category.name.includes('TV')) {
       watch = true;
     }
-
     if (category.name.includes('Book')) {
       read = true;
     }
-
     if (category.name.includes('Shopping') || category.name.includes('Games') || category.name.includes('Home & Garden') || category.name.includes('Computers & Electronics') || category.name.includes('/Food/')) {
       buy = true;
     }
-
   }
 
   // Returns category matching the text
@@ -165,3 +121,54 @@ async function quickstart(text) {
 }
 
 module.exports = { quickstart, categoryCheck1, categoryCheck2 };
+
+
+// ------------------- Unsuccessful code ------------------ //
+
+
+// Yelp API client for restaurants: https://github.com/tonybadguy/yelp-fusion
+
+// const restaurantKey = process.env.RESTAURANT_KEY;
+// const yelp = require('yelp-fusion');
+// const client = yelp.client(restaurantKey);
+
+// const getRestaurants = (text) => {
+
+//   client.search({
+//     term: text,
+//     location: 'canada',
+//   }).then(response => {
+//     console.log(response.jsonBody.businesses);
+//     console.log(response.jsonBody.businesses[0].name);
+//   }).catch(e => {
+//     console.log(e);
+//   });
+
+// };
+
+// getRestaurants(text)
+//   .then(response => {
+//     if (response.businesses.length > 0) resolve('Restaurants');
+//     return;
+//   })
+//   .catch((error) => reject(error.message));
+
+
+// Rainforest Amazon categories API: https://www.rainforestapi.com/category-results-api
+
+// const productKey = process.env.PRODUCT_KEY;
+
+// const getProducts = (text) => {
+//   const params = {
+//     api_key: productKey,
+//       amazon_domain: "amazon.ca",
+//       asin: "B073JYC4XM",
+//       type: "product"
+//   };
+//   axios.get('https://api.rainforestapi.com/request', { params })
+//     .then(response => console.log(JSON.stringify(response.data, 0, 2)))
+//     .catch(error => console.log(error))
+// };
+
+
+
