@@ -72,10 +72,10 @@ const getMovies = (text) => {
 const categoryCheck1 = (text) => {
   text = text.toLowerCase();
   const arr = text.split(' ');
-  if (arr.includes('buy')) return 'Products';
-  if (arr.includes('watch')) return 'Movies';
-  if (arr.includes('eat')) return 'Restaurants';
-  if (arr.includes('read')) return 'Books';
+  if (arr.includes('buy')) return 'Buy';
+  if (arr.includes('watch')) return 'Watch';
+  if (arr.includes('eat')) return 'Eat';
+  if (arr.includes('read')) return 'Read';
 
   return false;
 }
@@ -87,14 +87,14 @@ const categoryCheck2 = (text) => {
   return new Promise((resolve, reject) => {
     getMovies(text)
       .then(response => {
-        if (response.qid === 'movie') resolve('Movies');
+        if (response.qid === 'movie') resolve('Watch');
         return;
       })
       .catch((error) => reject(error.message));
 
     getBooks(text)
       .then(response => {
-        if (response.length > 0) resolve('Books');
+        if (response.length > 0) resolve('Read');
         return;
       })
       .catch((error) => reject(error.message));
@@ -133,21 +133,34 @@ async function quickstart(text) {
     classificationModelOptions
   });
   // Updated to true if the text matches a certain category
-  let restaurantWinner, movieWinner, bookWinner, productWinner = false;
+  let eat, watch, read, buy = false;
 
   // Loops through categories and updates variables to true if category is found
   for (category of classification.categories) {
-    if (category.name.includes('Restaurant')) restaurantWinner = true;
-    if (category.name.includes('Movie')) movieWinner = true;
-    if (category.name.includes('Book')) bookWinner = true;
-    if (category.name.includes('Shopping') || category.name.includes('Games') || category.name.includes('Home & Garden') || category.name.includes('Computers & Electronics')) productWinner = true;
+
+    if (category.name.includes('Restaurants') || category.name.includes('Food Service') || category.name.includes('Cuisines')) {
+      eat = true;
+    }
+
+    if (category.name.includes('Movie') || category.name.includes('TV')) {
+      watch = true;
+    }
+
+    if (category.name.includes('Book')) {
+      read = true;
+    }
+
+    if (category.name.includes('Shopping') || category.name.includes('Games') || category.name.includes('Home & Garden') || category.name.includes('Computers & Electronics') || category.name.includes('/Food/')) {
+      buy = true;
+    }
+
   }
 
   // Returns category matching the text
-  if (restaurantWinner) return 'Restaurants';
-  if (movieWinner) return 'Movies';
-  if (bookWinner) return 'Books';
-  if (productWinner) return 'Products';
+  if (eat) return 'Eat';
+  if (watch) return 'Watch';
+  if (read) return 'Read';
+  if (buy) return 'Buy';
 
 }
 
