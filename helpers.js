@@ -1,4 +1,4 @@
-// -------- Determines category based on text passed into function -------- //
+// ------------ Google natural language API function ------------ //
 
 
 // Returns a promise. Requires npm install --save @google-cloud/language.
@@ -23,7 +23,6 @@ async function quickstart(text) {
   // Updated to true if the text matches a certain category
   let restaurantWinner, movieWinner, bookWinner, productWinner = false;
 
-
   // Loops through categories and updates variables to true if category is found
   for (category of classification.categories) {
     if (category.name.includes('Restaurant')) restaurantWinner = true;
@@ -41,3 +40,28 @@ async function quickstart(text) {
 }
 
 module.exports = { quickstart };
+
+
+// add to server.js if required:
+
+// const { quickstart } = require('./helpers.js');
+
+// works with post route on public/scripts/app.js to insert form input into database and calls quickstart function to use google cloud natural language api to categorize
+// app.post('/tasks', function(req, res) {
+
+//   quickstart(req.body.name)
+//     .then((result) => {
+//       const category = result;
+//       const values = [req.body.name, category];
+//       const queryString = `
+//         INSERT INTO tasks (name, category)
+//         VALUES ($1, $2)
+//         RETURNING *;
+//         `;
+//       db.query(queryString, values)
+//         .then(() => res.send('Success'))
+//         .catch(() => res.send(err));
+//       })
+//     .catch((err) => console.log(err));
+// });
+

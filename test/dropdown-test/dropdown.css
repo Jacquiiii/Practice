@@ -25,6 +25,7 @@ ul {
   border: transparent;
   font-size: 1em;
   color: rgb(94, 26, 94);
+  cursor: pointer;
 }
 
 .inputs, .actions {

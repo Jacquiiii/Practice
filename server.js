@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const { quickstart } = require('./helpers.js');
+const { categoryCheck1, categoryCheck2 } = require('./api.js');
 
 
 // -------------------- Sass code -------------------- //
@@ -30,7 +30,6 @@ const { quickstart } = require('./helpers.js');
 //     isSass: false, // false => scss, true => sass
 //   })
 // );
-
 
 // ------------------- Route code -------------------- //
 
@@ -47,11 +46,29 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// works with post route on public/scripts/app.js to insert form input into database and calls quickstart function to use google cloud natural language api to categorize
+
 app.post('/tasks', function(req, res) {
 
-  quickstart(req.body.name)
+  // synchronous check without api
+  const firstCheck = categoryCheck1(req.body.name);
+  if (firstCheck) {
+    const category = firstCheck;
+    const values = [req.body.name, category];
+    const queryString = `
+      INSERT INTO tasks (name, category)
+      VALUES ($1, $2)
+      RETURNING *;
+      `;
+
+    db.query(queryString, values)
+      .then(() => res.send('Success'))
+      .catch(() => res.send(err));
+
+  } else {
+    // asynch check with api
+    categoryCheck2(req.body.name)
     .then((result) => {
+
       const category = result;
       const values = [req.body.name, category];
       const queryString = `
@@ -59,14 +76,18 @@ app.post('/tasks', function(req, res) {
         VALUES ($1, $2)
         RETURNING *;
         `;
+
       db.query(queryString, values)
         .then(() => res.send('Success'))
         .catch(() => res.send(err));
-      })
+
+    })
     .catch((err) => console.log(err));
+    }
+
 });
 
-// alternative to the above without google natural language
+// alternative to the above without api to categorize
 // app.post('/tasks', function(req, res) {
 
 //   const category = 'unknown';
